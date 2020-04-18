@@ -1,18 +1,27 @@
-package graphs.structure;
+package graphs.structure.base;
+
+import javafx.scene.paint.Color;
 
 import java.util.Objects;
 
 public class Edge<T> {
     private T v;
     private T u;
+    private Color color;
 
     public Edge(T v, T u) {
         this.v = v;
         this.u = u;
+        color = Color.GRAY;
     }
+
 
     public Edge<T> reverse() {
         return new Edge<>(u, v);
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     public T getKey() {

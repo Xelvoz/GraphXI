@@ -1,4 +1,8 @@
-package graphs.structure;
+package graphs.structure.types;
+
+import graphs.structure.AbstractGraph;
+import graphs.structure.base.Edge;
+import graphs.structure.base.GraphType;
 
 import java.util.Collection;
 

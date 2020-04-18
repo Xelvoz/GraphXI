@@ -1,6 +1,11 @@
-package graphs.structure;
+package graphs.structure.types;
+
+import graphs.structure.AbstractGraph;
+import graphs.structure.base.Edge;
+import graphs.structure.base.GraphType;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 public class UndirectedGraph<T> extends AbstractGraph<T> {
 
@@ -25,6 +30,20 @@ public class UndirectedGraph<T> extends AbstractGraph<T> {
             graph.get(other).add(vertex);
         }
         return false;
+    }
+
+    @Override
+    public Collection<Edge<T>> getAllEdges() {
+        HashSet<Edge<T>> edges = new HashSet<>();
+        for (T v : getAllVertices()) {
+            for (T u : getNeighbors(v)) {
+                Edge<T> e = new Edge<>(v, u);
+                if (!edges.contains(e.reverse())) {
+                    edges.add(e);
+                }
+            }
+        }
+        return edges;
     }
 
     @Override

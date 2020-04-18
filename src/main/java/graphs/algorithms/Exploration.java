@@ -1,8 +1,8 @@
 package graphs.algorithms;
 
 import graphs.structure.AbstractGraph;
-import graphs.structure.Edge;
-import graphs.structure.FlowNetwork;
+import graphs.structure.base.Edge;
+import graphs.structure.types.FlowNetwork;
 
 import java.util.*;
 import java.util.stream.Collectors;

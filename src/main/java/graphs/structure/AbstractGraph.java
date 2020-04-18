@@ -1,5 +1,8 @@
 package graphs.structure;
 
+import graphs.structure.base.Edge;
+import graphs.structure.base.GraphType;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,17 +11,17 @@ import java.util.stream.Collectors;
 public abstract class AbstractGraph<T> {
     protected HashMap<T, HashSet<T>> graph;
 
-    AbstractGraph() {
+    public AbstractGraph() {
         graph = new HashMap<>();
     }
 
-    AbstractGraph(Collection<T> vertices, Collection<Edge<T>> edges) {
+    public AbstractGraph(Collection<T> vertices, Collection<Edge<T>> edges) {
         this();
         for (T v : vertices) addVertex(v);
         for (Edge<T> e : edges) addEdge(e);
     }
 
-    AbstractGraph(AbstractGraph<T> graph) {
+    public AbstractGraph(AbstractGraph<T> graph) {
         this();
         for (T v : graph.getAllVertices()) addVertex(v);
         for (Edge<T> e : graph.getAllEdges()) addEdge(e);
@@ -92,4 +95,8 @@ public abstract class AbstractGraph<T> {
 
 
     public abstract GraphType getType();
+
+    public boolean hasNeighbor(T v, T u) {
+        return graph.get(v).contains(u);
+    }
 }

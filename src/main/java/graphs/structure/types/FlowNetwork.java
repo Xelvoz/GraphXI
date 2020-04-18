@@ -1,4 +1,6 @@
-package graphs.structure;
+package graphs.structure.types;
+
+import graphs.structure.base.Edge;
 
 import java.util.Collection;
 import java.util.HashMap;

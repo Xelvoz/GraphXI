@@ -1,4 +1,4 @@
-package graphs.structure;
+package graphs.structure.base;
 
 public enum GraphType {
     UNDIRECTED,

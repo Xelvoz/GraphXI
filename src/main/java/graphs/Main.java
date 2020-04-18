@@ -1,7 +1,7 @@
 package graphs;
 
 import graphs.algorithms.Flow;
-import graphs.structure.FlowNetwork;
+import graphs.structure.types.FlowNetwork;
 
 public class Main {
     public static void main(String[] args) {
