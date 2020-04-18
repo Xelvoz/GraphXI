@@ -13,7 +13,6 @@ public class GraphCanvas extends Canvas {
     public void draw(AbstractGraph<Vertex> graph, PositionPool2D positionPool) {
         GraphicsContext context = getGraphicsContext2D();
         context.clearRect(0, 0, getWidth(), getHeight());
-        context.beginPath();
 
         for (Edge<Vertex> e : graph.getAllEdges()) {
             Vertex v = e.getKey();
