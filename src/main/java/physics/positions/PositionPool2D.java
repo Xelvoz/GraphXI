@@ -2,7 +2,7 @@ package physics.positions;
 
 import graphs.structure.AbstractGraph;
 import graphs.structure.base.Vertex;
-import physics.Vector2D;
+import physics.vectors.Vector2D;
 import utils.RNG;
 
 import java.util.Collection;

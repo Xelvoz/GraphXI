@@ -1,11 +1,12 @@
-package physics;
+package physics.forces;
 
 import graphs.structure.AbstractGraph;
 import graphs.structure.base.Vertex;
+import physics.vectors.Vector2D;
 
 public class SpringsAndParticles extends TheForce {
 
-    double springLength = 100;
+    double springLength = 50;
     double stepMagnitude = 5;
 
     public SpringsAndParticles(AbstractGraph<Vertex> graph) {
@@ -49,6 +50,6 @@ public class SpringsAndParticles extends TheForce {
                 .scalar(-1)
                 .add(v2)
                 .normalize()
-                .scalar(-k / squareDistance);
+                .scalar(-3 * k / squareDistance);
     }
 }

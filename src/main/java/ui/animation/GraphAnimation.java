@@ -1,7 +1,7 @@
 package ui.animation;
 
 import javafx.animation.AnimationTimer;
-import physics.TheForce;
+import physics.forces.TheForce;
 
 public class GraphAnimation extends AnimationTimer {
     private GraphCanvas canvas;

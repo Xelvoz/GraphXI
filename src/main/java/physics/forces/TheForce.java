@@ -1,8 +1,9 @@
-package physics;
+package physics.forces;
 
 import graphs.structure.AbstractGraph;
 import graphs.structure.base.Vertex;
 import physics.positions.PositionPool2D;
+import physics.vectors.Vector2D;
 
 public abstract class TheForce {
     PositionPool2D positionPool;

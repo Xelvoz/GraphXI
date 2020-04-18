@@ -1,4 +1,4 @@
-package physics;
+package physics.vectors;
 
 public class Vector2D {
     public static Vector2D ZERO = new Vector2D(0, 0);

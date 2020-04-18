@@ -5,8 +5,8 @@ import graphs.structure.base.Edge;
 import graphs.structure.base.Vertex;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import physics.Vector2D;
 import physics.positions.PositionPool2D;
+import physics.vectors.Vector2D;
 
 public class GraphCanvas extends Canvas {
 
