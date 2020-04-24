@@ -68,6 +68,23 @@ public class Exploration {
         return visited;
     }
 
+    public static <T> Map<T, Boolean> Dfs(FlowNetwork<T> graph, T source) {
+        HashMap<T, Boolean> visited = visitedMap(graph);
+        Stack<T> Q = new Stack<>();
+        Q.add(source);
+        visited.replace(source, true);
+        while (!Q.isEmpty()) {
+            T v = Q.pop();
+            for (T u : graph.getNeighbors(v)) {
+                if (!visited.get(u) && graph.remainingCapacity(v, u) > 0) {
+                    visited.replace(u, true);
+                    Q.push(u);
+                }
+            }
+        }
+        return visited;
+    }
+
     public static <T> List<Edge<T>> verticesToEdges(List<T> vertices) {
         List<Edge<T>> edges = new ArrayList<>();
         for (int i = 0; i < vertices.size() - 1; i++) {

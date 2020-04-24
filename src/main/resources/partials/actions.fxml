@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            xmlns="http://javafx.com/javafx"
+            fx:controller="ui.controllers.ActionsController"
+            prefHeight="400.0" prefWidth="600.0"
+            stylesheets="/style.css">
+    <VBox prefWidth="50.0" prefHeight="800.0" spacing="5" alignment="CENTER">
+        <Button id="actionBtn">
+            <tooltip>
+                <Tooltip text="Move" showDelay="100ms"/>
+            </tooltip>
+            <graphic>
+                <ImageView>
+                    <Image url="/icons/hand-tool.png"/>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Button id="actionBtn">
+            <tooltip>
+                <Tooltip text="Select" showDelay="100ms"/>
+            </tooltip>
+            <graphic>
+                <ImageView>
+                    <Image url="/icons/selection-tool.png"/>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Button id="actionBtn">
+            <tooltip>
+                <Tooltip text="Add Node" showDelay="100ms"/>
+            </tooltip>
+            <graphic>
+                <ImageView>
+                    <Image url="/icons/add-node.png"/>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Button id="actionBtn">
+            <tooltip>
+                <Tooltip text="Add Edge" showDelay="100ms"/>
+            </tooltip>
+            <graphic>
+                <ImageView>
+                    <Image url="/icons/add-edge.png"/>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Button id="actionBtn">
+            <tooltip>
+                <Tooltip text="Remove Node" showDelay="100ms"/>
+            </tooltip>
+            <graphic>
+                <ImageView>
+                    <Image url="/icons/remove-node.png"/>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Button id="actionBtn">
+            <tooltip>
+                <Tooltip text="Remove Edge" showDelay="100ms"/>
+            </tooltip>
+            <graphic>
+                <ImageView>
+                    <Image url="/icons/remove-edge.png"/>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Button id="actionBtn">
+            <tooltip>
+                <Tooltip text="Freeze Node" showDelay="100ms"/>
+            </tooltip>
+            <graphic>
+                <ImageView>
+                    <Image url="/icons/freeze.png"/>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Button id="actionBtn">
+            <tooltip>
+                <Tooltip text="Unfreeze Node" showDelay="100ms"/>
+            </tooltip>
+            <graphic>
+                <ImageView>
+                    <Image url="/icons/unfreeze.png"/>
+                </ImageView>
+            </graphic>
+        </Button>
+    </VBox>
+</AnchorPane>

@@ -1,0 +1,14 @@
+#actionBtn {
+    -fx-end-margin: 1;
+    -fx-start-margin: 1;
+    -fx-padding: 2;
+    -fx-background-color: transparent;
+    -fx-border-width: 1;
+    -fx-border-color: #292929;
+    -fx-border-radius: 50%;
+}
+
+#actionBtn:focused {
+    -fx-background-color: #292929;
+    -fx-background-radius: 50%;
+}

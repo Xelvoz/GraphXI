@@ -24,11 +24,11 @@ public class Edge<T> {
         return color;
     }
 
-    public T getKey() {
+    public T getFirstEnd() {
         return v;
     }
 
-    public T getValue() {
+    public T getSecondEnd() {
         return u;
     }
 

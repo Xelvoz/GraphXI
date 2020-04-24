@@ -45,11 +45,11 @@ public class FlowNetwork<T> extends DirectedGraph<T> {
     }
 
     public boolean addEdge(Edge<T> edge, double flow, double cost, double capacity) {
-        return addEdge(edge.getKey(), edge.getValue(), flow, cost, capacity);
+        return addEdge(edge.getFirstEnd(), edge.getSecondEnd(), flow, cost, capacity);
     }
 
     public boolean addEdge(Edge<T> edge, double cost, double capacity) {
-        return addEdge(edge.getKey(), edge.getValue(), cost, capacity);
+        return addEdge(edge.getFirstEnd(), edge.getSecondEnd(), cost, capacity);
     }
 
     public boolean addEdge(T vertex, T other, double capacity) {
@@ -57,7 +57,7 @@ public class FlowNetwork<T> extends DirectedGraph<T> {
     }
 
     public boolean addEdge(Edge<T> edge, double capacity) {
-        return addEdge(edge.getKey(), edge.getValue(), 0.0, capacity);
+        return addEdge(edge.getFirstEnd(), edge.getSecondEnd(), 0.0, capacity);
     }
 
     public double getCapacity(T vertex, T other) {
@@ -118,8 +118,8 @@ public class FlowNetwork<T> extends DirectedGraph<T> {
                 e -> System.out.println(
                         String.format(
                                 "~ (%s, %s) - Flow: %.0f - Capacity: %.0f - Cost: %.2f",
-                                e.getKey(),
-                                e.getValue(),
+                                e.getFirstEnd(),
+                                e.getSecondEnd(),
                                 getFlow(e),
                                 getCapacity(e),
                                 getCost(e))

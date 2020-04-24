@@ -2,8 +2,8 @@ package physics.vectors;
 
 public class Vector2D {
     public static Vector2D ZERO = new Vector2D(0, 0);
-    private final double x;
-    private final double y;
+    private double x;
+    private double y;
 
     public Vector2D(double x, double y) {
         this.x = x;
@@ -46,6 +46,6 @@ public class Vector2D {
 
     @Override
     public String toString() {
-        return "(" + x + ", " + y + ')';
+        return String.format("(%.1f, %.1f)", x, y);
     }
 }

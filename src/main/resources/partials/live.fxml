@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            xmlns="http://javafx.com/javafx"
+            fx:controller="ui.controllers.LiveInfoController"
+            prefHeight="400.0" prefWidth="600.0">
+    <TabPane prefHeight="475.0" prefWidth="200.0">
+        <Tab closable="false" text="Nodes">
+            <TableView fx:id="nodesTable">
+            </TableView>
+        </Tab>
+        <Tab closable="false" text="Edges">
+            <TableView fx:id="edgesTable">
+            </TableView>
+        </Tab>
+        <Tab closable="false" text="Positions">
+            <TableView fx:id="positionsTable">
+            </TableView>
+        </Tab>
+    </TabPane>
+</AnchorPane>

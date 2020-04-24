@@ -2,18 +2,19 @@ package physics.positions;
 
 import graphs.structure.AbstractGraph;
 import graphs.structure.base.Vertex;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
 public abstract class PositionPool<T> {
-    HashMap<Vertex, T> positions;
+    ObservableMap<Vertex, T> positions;
     HashSet<Vertex> ignored;
 
     public PositionPool(AbstractGraph<Vertex> graph) {
-        positions = (HashMap<Vertex, T>) initializeRandomPositions(graph.getAllVertices());
+        positions = FXCollections.observableMap(initializeRandomPositions(graph.getAllVertices()));
         ignored = new HashSet<>();
     }
 
@@ -38,4 +39,8 @@ public abstract class PositionPool<T> {
     }
 
     public abstract T centerOfMass();
+
+    public ObservableMap<Vertex, T> getPositions() {
+        return positions;
+    }
 }

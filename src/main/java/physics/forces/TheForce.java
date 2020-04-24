@@ -8,6 +8,8 @@ import physics.vectors.Vector2D;
 public abstract class TheForce {
     PositionPool2D positionPool;
     AbstractGraph<Vertex> graph;
+    double canvasWidth;
+    double canvasHeight;
 
     public TheForce(AbstractGraph<Vertex> graph) {
         this.graph = graph;
@@ -16,7 +18,12 @@ public abstract class TheForce {
 
     public abstract void applyForces();
 
-    public void centerGraph(double canvasHeight, double canvasWidth) {
+    public void initialize(double canvasWidth, double canvasHeight) {
+        this.canvasHeight = canvasHeight;
+        this.canvasWidth = canvasWidth;
+    }
+
+    public void centerGraph() {
         Vector2D centerOfMass = positionPool.centerOfMass();
         for (Vertex v : graph.getAllVertices()) {
             positionPool.updatePosition(

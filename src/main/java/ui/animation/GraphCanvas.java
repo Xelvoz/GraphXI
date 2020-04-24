@@ -15,20 +15,20 @@ public class GraphCanvas extends Canvas {
         context.clearRect(0, 0, getWidth(), getHeight());
 
         for (Edge<Vertex> e : graph.getAllEdges()) {
-            Vertex v = e.getKey();
-            Vertex u = e.getValue();
+            Vertex v = e.getFirstEnd();
+            Vertex u = e.getSecondEnd();
             Vector2D p1 = positionPool.getPosition(v);
             Vector2D p2 = positionPool.getPosition(u);
             context.setStroke(e.getColor());
             context.strokeLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
-            Vector2D middle = p1.add(p2).scalar(0.5);
-            context.strokeText(e.toString(), middle.getX(), middle.getY());
         }
 
         for (Vertex v : graph.getAllVertices()) {
-            Vector2D p = positionPool.getPosition(v).add(new Vector2D(-v.getRadius(), -v.getRadius()));
+            Vector2D pp = positionPool.getPosition(v);
+            Vector2D p = pp.add(new Vector2D(-v.getRadius(), -v.getRadius()));
             context.setFill(v.getColor());
             context.fillOval(p.getX(), p.getY(), v.getDiameter(), v.getDiameter());
+            context.strokeText(v.getLabel(), pp.getX(), p.getY());
         }
     }
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            xmlns="http://javafx.com/javafx"
+            fx:controller="ui.controllers.InfoController"
+            prefHeight="400.0" prefWidth="600.0">
+    <TabPane prefHeight="300.0" prefWidth="200.0">
+        <Tab closable="false" text="Info">
+            <VBox HBox.hgrow="ALWAYS">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <HBox>
+                    <Label text="Graph Type: "/>
+                    <Label fx:id="gtype" text="N/A"/>
+                </HBox>
+                <HBox>
+                    <Label text="Number of Nodes:"/>
+                    <Label fx:id="gnodes" text="N/A"/>
+                </HBox>
+
+                <HBox>
+                    <Label text="Number of Edges:"/>
+                    <Label fx:id="gedges" text="N/A"/>
+                </HBox>
+            </VBox>
+        </Tab>
+    </TabPane>
+</AnchorPane>

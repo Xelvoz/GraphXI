@@ -47,13 +47,13 @@ public abstract class AbstractGraph<T> {
     public abstract boolean addEdge(T vertex, T other);
 
     public boolean addEdge(Edge<T> edge) {
-        return addEdge(edge.getKey(), edge.getValue());
+        return addEdge(edge.getFirstEnd(), edge.getSecondEnd());
     }
 
     public abstract boolean removeEdge(T vertex, T other);
 
     public boolean removeEdge(Edge<T> edge) {
-        return removeEdge(edge.getKey(), edge.getValue());
+        return removeEdge(edge.getFirstEnd(), edge.getSecondEnd());
     }
 
     public Collection<T> getNeighbors(T vertex) {
@@ -76,11 +76,11 @@ public abstract class AbstractGraph<T> {
     }
 
     public Collection<Edge<T>> getIncomingEdges(T vertex) {
-        return getAllEdges().stream().filter(edge -> edge.getValue() == vertex).collect(Collectors.toList());
+        return getAllEdges().stream().filter(edge -> edge.getSecondEnd() == vertex).collect(Collectors.toList());
     }
 
     public Collection<Edge<T>> getOutgoingEdges(T vertex) {
-        return getAllEdges().stream().filter(edge -> edge.getKey() == vertex).collect(Collectors.toList());
+        return getAllEdges().stream().filter(edge -> edge.getFirstEnd() == vertex).collect(Collectors.toList());
     }
 
     public void print() {
@@ -98,5 +98,13 @@ public abstract class AbstractGraph<T> {
 
     public boolean hasNeighbor(T v, T u) {
         return graph.get(v).contains(u);
+    }
+
+    public int numberOfNodes() {
+        return graph.size();
+    }
+
+    public int numberOfEdges() {
+        return getAllEdges().size();
     }
 }

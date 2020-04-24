@@ -3,8 +3,8 @@ package graphs.algorithms;
 import graphs.structure.base.Edge;
 import graphs.structure.types.FlowNetwork;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Flow {
     private Flow() {
@@ -27,6 +27,7 @@ public class Flow {
             }
             maxFlow += pathFlow;
         }
+        System.out.println(MinimumCut(residualGraph, source));
         return maxFlow;
     }
 
@@ -34,12 +35,17 @@ public class Flow {
         FlowNetwork<T> residualGraph = new FlowNetwork<>(graph);
         HashMap<T, Double> distances = new HashMap<>();
         double minCost = 0;
-        double maxFlow = 0;
 
-        // Using BellmanFord will detect negative cycles from the start.
-        List<T> path = ShortestPath.BellmanFord(residualGraph, source, sink, distances);
-        // Reduce costs
-        reduceCosts(residualGraph, distances);
+        List<T> path;
+        try {
+            // Using BellmanFord will detect negative cycles from the start.
+            path = ShortestPath.BellmanFord(residualGraph, source, sink, distances);
+        } catch (Exception e) {
+            // Reduce costs
+            reduceCosts(residualGraph, distances);
+            path = ShortestPath.Djikstra(residualGraph, source, sink, distances);
+        }
+
 
         while (!path.isEmpty()) {
             double pathFlow = Double.POSITIVE_INFINITY;
@@ -57,15 +63,23 @@ public class Flow {
             reduceCosts(residualGraph, distances);
             // Djikstra on the reduced costs
             path = ShortestPath.Djikstra(residualGraph, source, sink, distances);
-            maxFlow += pathFlow;
         }
+        residualGraph.printDetailed();
         return minCost;
+    }
+
+    public static <T> Collection<Set<T>> MinimumCut(FlowNetwork<T> residualGraph, T source) {
+        Map<T, Boolean> visited = Exploration.Dfs(residualGraph, source);
+        Set<T> partitionOne = visited.entrySet().stream().filter(Map.Entry::getValue).map(Map.Entry::getKey).collect(Collectors.toSet());
+        Set<T> partitionTwo = (Set<T>) residualGraph.getAllVertices();
+        partitionTwo.removeAll(partitionOne);
+        return Arrays.asList(partitionOne, partitionTwo);
     }
 
     private static <T> void reduceCosts(FlowNetwork<T> graph, HashMap<T, Double> distances) {
         for (Edge<T> edge : graph.getAllEdges()) {
-            Double du = distances.get(edge.getKey());
-            Double dv = distances.get(edge.getValue());
+            double du = distances.get(edge.getFirstEnd());
+            double dv = distances.get(edge.getSecondEnd());
             if (graph.remainingCapacity(edge) > 0) {
                 graph.updateCost(edge, graph.getCost(edge) + du - dv);
             } else {

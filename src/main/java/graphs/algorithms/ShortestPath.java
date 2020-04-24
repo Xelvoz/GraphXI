@@ -45,7 +45,6 @@ public class ShortestPath {
                 }
             }
         }
-        if (distances.get(sink).isInfinite()) return new ArrayList<>();
         return Exploration.pathFromPredecessors(predecessors, source, sink);
     }
 
@@ -60,8 +59,8 @@ public class ShortestPath {
 
         for (int i = 0; i < graph.getAllVertices().size() - 1; i++) {
             for (Edge<T> e : allEdges) {
-                T u = e.getKey();
-                T v = e.getValue();
+                T u = e.getFirstEnd();
+                T v = e.getSecondEnd();
                 double newCost = distances.get(u) + graph.getCost(u, v);
                 if (newCost < distances.get(v) && (graph.remainingCapacity(e) > 0)) {
                     distances.replace(v, newCost);
@@ -71,13 +70,13 @@ public class ShortestPath {
         }
 
         for (Edge<T> e : allEdges) {
-            T u = e.getKey();
-            T v = e.getValue();
+            T u = e.getFirstEnd();
+            T v = e.getSecondEnd();
             if (distances.get(u) + graph.getCost(u, v) < distances.get(v)) {
                 throw new Exception("Negative cycle!");
             }
         }
-        if (distances.get(sink).isInfinite()) return new ArrayList<>();
+
         return Exploration.pathFromPredecessors(predecessors, source, sink);
     }
 }
