@@ -1,9 +1,11 @@
 package ui.controllers;
 
+import graphs.structure.AbstractGraph;
 import graphs.structure.base.Edge;
 import graphs.structure.base.Vertex;
+import io.reactivex.rxjavafx.observables.JavaFxObservable;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.collections.MapChangeListener;
+import javafx.collections.ObservableSet;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ColorPicker;
@@ -14,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import physics.forces.TheForce;
 import physics.vectors.Vector2D;
-import ui.animation.GraphAnimation;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,15 +30,20 @@ public class LiveInfoController implements Initializable {
     public TableView<Vertex> positionsTable;
 
     @Autowired
-    private CentralController centralController;
+    private TheForce theForce;
+
+    @Autowired
+    private AbstractGraph<Vertex> graph;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        GraphAnimation graphAnimation = centralController.getGraphAnimation();
-        TheForce theForce = centralController.getGraphAnimation().getTheForce();
-
         TableColumn<Vertex, String> nodeLabel = new TableColumn<>("Label");
         nodeLabel.setCellValueFactory(new PropertyValueFactory<>("label"));
+        nodeLabel.setEditable(true);
+        nodeLabel.setOnEditCommit(event -> {
+            if (graph.getAllVertices().stream().noneMatch(v -> v.getLabel().equals(event.getNewValue())))
+                event.getRowValue().setLabel(event.getNewValue());
+        });
         nodeLabel.setStyle("-fx-alignment: CENTER;");
         nodeLabel.setPrefWidth(90.0);
         nodeLabel.setMaxWidth(90.0);
@@ -55,10 +61,9 @@ public class LiveInfoController implements Initializable {
         nodeColor.setPrefWidth(90.0);
         nodeColor.setMaxWidth(90.0);
 
-
         nodesTable.getColumns().add(nodeLabel);
         nodesTable.getColumns().add(nodeColor);
-        nodesTable.getItems().addAll(graphAnimation.getGraph().getAllVertices());
+        nodesTable.getItems().addAll(graph.getAllVertices());
 
         TableColumn<Edge<Vertex>, String> firstEnd = new TableColumn<>("First End");
         firstEnd.setCellValueFactory(new PropertyValueFactory<>("firstEnd"));
@@ -74,7 +79,8 @@ public class LiveInfoController implements Initializable {
 
         edgesTable.getColumns().add(firstEnd);
         edgesTable.getColumns().add(secondEnd);
-        edgesTable.getItems().addAll(graphAnimation.getGraph().getAllEdges());
+        edgesTable.getItems().addAll(graph.getAllEdges());
+
 
         TableColumn<Vertex, String> positionLabel = new TableColumn<>("Label");
         positionLabel.setCellValueFactory(new PropertyValueFactory<>("label"));
@@ -90,13 +96,28 @@ public class LiveInfoController implements Initializable {
         positionLocation.setStyle("-fx-alignment: CENTER;");
         positionLocation.setPrefWidth(90.0);
         positionLocation.setMaxWidth(90.0);
-        MapChangeListener<Vertex, Vector2D> mapChangeListener = change -> {
-            positionsTable.getItems().setAll(graphAnimation.getGraph().getAllVertices());
-        };
-        theForce.getPositionPool().getPositions().addListener(mapChangeListener);
 
         positionsTable.getColumns().add(positionLabel);
         positionsTable.getColumns().add(positionLocation);
-        positionsTable.getItems().addAll(graphAnimation.getGraph().getAllVertices());
+        positionsTable.getItems().addAll(graph.getAllVertices());
+
+        // FIXME: There's a bug here. Empty the graph. Add two vertices. Add edge between them. No changes are emitted.
+        for (ObservableSet<Vertex> neighbor : graph.getGraph().values()) {
+            JavaFxObservable.emitOnChanged(neighbor).subscribe(
+                    (v) -> {
+                        edgesTable.getItems().setAll(graph.getAllEdges());
+                    }
+            );
+        }
+        JavaFxObservable.changesOf(graph.getGraph()).subscribe(
+                (v) -> {
+                    nodesTable.getItems().setAll(graph.getAllVertices());
+                }
+        );
+        JavaFxObservable.changesOf(theForce.getPositionPool().getPositions()).subscribe(
+                (v) -> {
+                    positionsTable.getItems().setAll(graph.getAllVertices());
+                }
+        );
     }
 }

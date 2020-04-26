@@ -2,17 +2,19 @@ package graphs.structure;
 
 import graphs.structure.base.Edge;
 import graphs.structure.base.GraphType;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
+import javafx.collections.ObservableSet;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
 public abstract class AbstractGraph<T> {
-    protected HashMap<T, HashSet<T>> graph;
+    protected ObservableMap<T, ObservableSet<T>> graph;
 
     public AbstractGraph() {
-        graph = new HashMap<>();
+        graph = FXCollections.observableHashMap();
     }
 
     public AbstractGraph(Collection<T> vertices, Collection<Edge<T>> edges) {
@@ -29,7 +31,7 @@ public abstract class AbstractGraph<T> {
 
     public boolean addVertex(T vertex) {
         if (!graph.containsKey(vertex)) {
-            graph.put(vertex, new HashSet<>());
+            graph.put(vertex, FXCollections.observableSet(new HashSet<>()));
             return true;
         }
         return false;
@@ -106,5 +108,9 @@ public abstract class AbstractGraph<T> {
 
     public int numberOfEdges() {
         return getAllEdges().size();
+    }
+
+    public ObservableMap<T, ObservableSet<T>> getGraph() {
+        return graph;
     }
 }

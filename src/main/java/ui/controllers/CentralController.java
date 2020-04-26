@@ -1,10 +1,11 @@
 package ui.controllers;
 
-import graphs.structure.generators.UGGenerator;
+import graphs.structure.AbstractGraph;
+import graphs.structure.base.Vertex;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import physics.forces.SpringsAndParticles;
 import physics.forces.TheForce;
 import ui.animation.GraphAnimation;
 import ui.animation.GraphCanvas;
@@ -15,14 +16,22 @@ import java.util.ResourceBundle;
 @Component
 public class CentralController implements Initializable {
 
+    @Autowired
+    private ActionsController actionsController;
+
     @FXML
     private GraphCanvas graphCanvas;
+
     private GraphAnimation graphAnimation;
+
+    @Autowired
     private TheForce theForce;
 
+    @Autowired
+    private AbstractGraph<Vertex> graph;
+
     public CentralController() {
-        theForce = new SpringsAndParticles(UGGenerator.cyclic(20));
-        graphAnimation = new GraphAnimation(graphCanvas, theForce);
+
     }
 
     public GraphAnimation getGraphAnimation() {
@@ -35,7 +44,8 @@ public class CentralController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        graphAnimation.setCanvas(graphCanvas);
+        actionsController.setGraphCanvas(graphCanvas);
+        graphAnimation = new GraphAnimation(graphCanvas, theForce);
         theForce.initialize(graphCanvas.getWidth(), graphCanvas.getHeight());
         graphAnimation.start();
     }

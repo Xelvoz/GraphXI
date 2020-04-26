@@ -1,15 +1,22 @@
 package ui;
 
+import graphs.structure.AbstractGraph;
+import graphs.structure.base.Vertex;
+import graphs.structure.generators.UGGenerator;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
+import physics.forces.SpringsAndParticles;
+import physics.forces.TheForce;
 
 @SpringBootApplication
 public class UserInterface extends Application {
@@ -39,6 +46,16 @@ public class UserInterface extends Application {
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    @Bean
+    public AbstractGraph<Vertex> graph() {
+        return UGGenerator.cyclic(20);
+    }
+
+    @Bean
+    public TheForce theForce(@Autowired AbstractGraph<Vertex> graph) {
+        return new SpringsAndParticles(graph);
     }
 
     @Override

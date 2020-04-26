@@ -7,20 +7,11 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             xmlns="http://javafx.com/javafx"
             fx:controller="ui.controllers.ActionsController"
+            fx:id="actions"
             prefHeight="400.0" prefWidth="600.0"
             stylesheets="/style.css">
     <VBox prefWidth="50.0" prefHeight="800.0" spacing="5" alignment="CENTER">
-        <Button id="actionBtn">
-            <tooltip>
-                <Tooltip text="Move" showDelay="100ms"/>
-            </tooltip>
-            <graphic>
-                <ImageView>
-                    <Image url="/icons/hand-tool.png"/>
-                </ImageView>
-            </graphic>
-        </Button>
-        <Button id="actionBtn">
+        <Button id="actionBtn" onMouseClicked="#moveAction">
             <tooltip>
                 <Tooltip text="Select" showDelay="100ms"/>
             </tooltip>
@@ -30,7 +21,17 @@
                 </ImageView>
             </graphic>
         </Button>
-        <Button id="actionBtn">
+        <Button id="actionBtn" onMouseClicked="#translateAction">
+            <tooltip>
+                <Tooltip text="Move" showDelay="100ms"/>
+            </tooltip>
+            <graphic>
+                <ImageView>
+                    <Image url="/icons/hand-tool.png"/>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Button id="actionBtn" onMouseClicked="#addNode">
             <tooltip>
                 <Tooltip text="Add Node" showDelay="100ms"/>
             </tooltip>
@@ -40,7 +41,7 @@
                 </ImageView>
             </graphic>
         </Button>
-        <Button id="actionBtn">
+        <Button id="actionBtn" onMouseClicked="#addEdge">
             <tooltip>
                 <Tooltip text="Add Edge" showDelay="100ms"/>
             </tooltip>
@@ -50,7 +51,7 @@
                 </ImageView>
             </graphic>
         </Button>
-        <Button id="actionBtn">
+        <Button id="actionBtn" onMouseClicked="#removeNode">
             <tooltip>
                 <Tooltip text="Remove Node" showDelay="100ms"/>
             </tooltip>
@@ -60,7 +61,7 @@
                 </ImageView>
             </graphic>
         </Button>
-        <Button id="actionBtn">
+        <Button id="actionBtn" onMouseClicked="#removeEdge">
             <tooltip>
                 <Tooltip text="Remove Edge" showDelay="100ms"/>
             </tooltip>
@@ -70,7 +71,7 @@
                 </ImageView>
             </graphic>
         </Button>
-        <Button id="actionBtn">
+        <Button id="actionBtn" onMouseClicked="#freezeNode">
             <tooltip>
                 <Tooltip text="Freeze Node" showDelay="100ms"/>
             </tooltip>
@@ -80,7 +81,7 @@
                 </ImageView>
             </graphic>
         </Button>
-        <Button id="actionBtn">
+        <Button id="actionBtn" onMouseClicked="#unfreezeNode">
             <tooltip>
                 <Tooltip text="Unfreeze Node" showDelay="100ms"/>
             </tooltip>

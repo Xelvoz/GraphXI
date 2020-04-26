@@ -43,4 +43,12 @@ public abstract class PositionPool<T> {
     public ObservableMap<Vertex, T> getPositions() {
         return positions;
     }
+
+    public void setPosition(Vertex vertex, T pos) {
+        positions.replace(vertex, pos);
+    }
+
+    public void addPosition(Vertex newNode, T pos) {
+        positions.putIfAbsent(newNode, pos);
+    }
 }

@@ -6,7 +6,7 @@ import physics.vectors.Vector2D;
 
 public class SpringsAndParticles extends TheForce {
 
-    double springLength = 20;
+    double springLength = 30;
     double stepMagnitude = 5;
 
     public SpringsAndParticles(AbstractGraph<Vertex> graph) {
@@ -16,7 +16,6 @@ public class SpringsAndParticles extends TheForce {
     @Override
     public void initialize(double canvasWidth, double canvasHeight) {
         super.initialize(canvasWidth, canvasHeight);
-        springLength = graph.numberOfEdges() * Math.sqrt(graph.numberOfNodes() / (canvasHeight * canvasWidth));
     }
 
     @Override
@@ -49,12 +48,11 @@ public class SpringsAndParticles extends TheForce {
     private Vector2D particleForce(Vertex v, Vertex u) {
         Vector2D v1 = positionPool.getPosition(v);
         Vector2D v2 = positionPool.getPosition(u);
-        double k = Math.max(v.getRadius(), u.getRadius());
         double squareDistance = v1.distance(v2);
         return v1
                 .scalar(-1)
                 .add(v2)
                 .normalize()
-                .scalar(-3 * k / squareDistance);
+                .scalar(-1 / squareDistance);
     }
 }

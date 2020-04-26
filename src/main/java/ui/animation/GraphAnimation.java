@@ -19,7 +19,8 @@ public class GraphAnimation extends AnimationTimer {
     public void handle(long now) {
         canvas.draw(theForce.getGraph(), theForce.getPositionPool());
         theForce.applyForces();
-        theForce.centerGraph();
+        if (!canvas.getAction().disableGraphCentering())
+            theForce.centerGraph();
     }
 
     public TheForce getTheForce() {

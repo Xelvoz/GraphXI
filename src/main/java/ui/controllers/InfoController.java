@@ -1,11 +1,14 @@
 package ui.controllers;
 
+import graphs.structure.AbstractGraph;
+import graphs.structure.base.Vertex;
+import io.reactivex.rxjavafx.observables.JavaFxObservable;
+import javafx.collections.ObservableSet;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ui.animation.GraphAnimation;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,13 +23,26 @@ public class InfoController implements Initializable {
     public Label gedges;
 
     @Autowired
-    private CentralController centralController;
+    private AbstractGraph<Vertex> graph;
+
+    public InfoController() {
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        GraphAnimation graphAnimation = centralController.getGraphAnimation();
-        gtype.setText(graphAnimation.getGraph().getType().toString());
-        gnodes.setText(String.valueOf(graphAnimation.getGraph().numberOfNodes()));
-        gedges.setText(String.valueOf(graphAnimation.getGraph().numberOfEdges()));
+        gtype.setText(graph.getType().toString());
+        gnodes.setText(String.valueOf(graph.numberOfNodes()));
+        gedges.setText(String.valueOf(graph.numberOfEdges()));
+        for (ObservableSet<Vertex> neighbor : graph.getGraph().values())
+            JavaFxObservable.changesOf(neighbor).subscribe(
+                    (v) -> {
+                        gedges.setText(String.valueOf(graph.numberOfEdges()));
+                    }
+            );
+        JavaFxObservable.changesOf(graph.getGraph()).subscribe(
+                (v) -> {
+                    gnodes.setText(String.valueOf(graph.numberOfNodes()));
+                }
+        );
     }
 }
