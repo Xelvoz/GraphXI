@@ -27,7 +27,8 @@ public class Flow {
             }
             maxFlow += pathFlow;
         }
-        System.out.println(MinimumCut(residualGraph, source));
+        residualGraph.printDetailed();
+        System.out.println("Minimum-cut (Arcs):" + MinimumCut(residualGraph, source));
         return maxFlow;
     }
 
@@ -65,15 +66,23 @@ public class Flow {
             path = ShortestPath.Djikstra(residualGraph, source, sink, distances);
         }
         residualGraph.printDetailed();
+        System.out.println("Minimum-cut (Arcs):" + MinimumCut(residualGraph, source));
         return minCost;
     }
 
-    public static <T> Collection<Set<T>> MinimumCut(FlowNetwork<T> residualGraph, T source) {
+    public static <T> Collection<Edge<T>> MinimumCut(FlowNetwork<T> residualGraph, T source) {
         Map<T, Boolean> visited = Exploration.Dfs(residualGraph, source);
         Set<T> partitionOne = visited.entrySet().stream().filter(Map.Entry::getValue).map(Map.Entry::getKey).collect(Collectors.toSet());
         Set<T> partitionTwo = (Set<T>) residualGraph.getAllVertices();
         partitionTwo.removeAll(partitionOne);
-        return Arrays.asList(partitionOne, partitionTwo);
+        return residualGraph
+                .getFlows()
+                .entrySet()
+                .stream()
+                .filter(e -> residualGraph.remainingCapacity(e.getKey()) == 0.0)
+                .filter(e -> partitionTwo.contains(e.getKey().getSecondEnd()) && partitionOne.contains(e.getKey().getFirstEnd()))
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
     }
 
     private static <T> void reduceCosts(FlowNetwork<T> graph, HashMap<T, Double> distances) {

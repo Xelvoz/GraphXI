@@ -50,7 +50,7 @@ public class UserInterface extends Application {
 
     @Bean
     public AbstractGraph<Vertex> graph() {
-        return UGGenerator.cyclic(20);
+        return UGGenerator.cyclic(8);
     }
 
     @Bean

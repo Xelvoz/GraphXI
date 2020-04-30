@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
@@ -13,8 +15,13 @@
         <HBox alignment="CENTER_LEFT" prefHeight="775.0" prefWidth="1200.0">
             <fx:include fx:id="actions" source="partials/actions.fxml"/>
             <GraphCanvas fx:id="graphCanvas" height="775.0" width="950.0"/>
-            <VBox prefHeight="775.0" prefWidth="200.0">
+            <VBox prefHeight="775.0" prefWidth="200.0" alignment="CENTER">
                 <fx:include source="partials/info.fxml"/>
+                <CheckBox text="Toggle graph centering" fx:id="centering">
+                    <padding>
+                        <Insets top="10" bottom="10"/>
+                    </padding>
+                </CheckBox>
                 <fx:include source="partials/live.fxml"/>
             </VBox>
         </HBox>

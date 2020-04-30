@@ -5,7 +5,6 @@ import graphs.structure.base.Edge;
 import graphs.structure.base.Vertex;
 import io.reactivex.rxjavafx.observables.JavaFxObservable;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.collections.ObservableSet;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ColorPicker;
@@ -102,22 +101,18 @@ public class LiveInfoController implements Initializable {
         positionsTable.getItems().addAll(graph.getAllVertices());
 
         // FIXME: There's a bug here. Empty the graph. Add two vertices. Add edge between them. No changes are emitted.
-        for (ObservableSet<Vertex> neighbor : graph.getGraph().values()) {
-            JavaFxObservable.emitOnChanged(neighbor).subscribe(
-                    (v) -> {
-                        edgesTable.getItems().setAll(graph.getAllEdges());
-                    }
+        graph.getGraph().values().forEach(neighbor -> {
+            JavaFxObservable.changesOf(neighbor).subscribe(
+                    (v) -> edgesTable.getItems().setAll(graph.getAllEdges())
             );
-        }
-        JavaFxObservable.changesOf(graph.getGraph()).subscribe(
-                (v) -> {
-                    nodesTable.getItems().setAll(graph.getAllVertices());
-                }
-        );
-        JavaFxObservable.changesOf(theForce.getPositionPool().getPositions()).subscribe(
-                (v) -> {
-                    positionsTable.getItems().setAll(graph.getAllVertices());
-                }
-        );
+        });
+
+        JavaFxObservable
+                .changesOf(graph.getGraph())
+                .subscribe((v) -> nodesTable.getItems().setAll(graph.getAllVertices()));
+
+        JavaFxObservable
+                .changesOf(theForce.getPositionPool().getPositions())
+                .subscribe((v) -> positionsTable.getItems().setAll(graph.getAllVertices()));
     }
 }
