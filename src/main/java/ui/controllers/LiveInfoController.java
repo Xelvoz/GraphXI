@@ -100,7 +100,6 @@ public class LiveInfoController implements Initializable {
         positionsTable.getColumns().add(positionLocation);
         positionsTable.getItems().addAll(graph.getAllVertices());
 
-        // FIXME: There's a bug here. Empty the graph. Add two vertices. Add edge between them. No changes are emitted.
         graph.getGraph().values().forEach(neighbor -> {
             JavaFxObservable.changesOf(neighbor).subscribe(
                     (v) -> edgesTable.getItems().setAll(graph.getAllEdges())
@@ -114,5 +113,11 @@ public class LiveInfoController implements Initializable {
         JavaFxObservable
                 .changesOf(theForce.getPositionPool().getPositions())
                 .subscribe((v) -> positionsTable.getItems().setAll(graph.getAllVertices()));
+
+        JavaFxObservable
+                .additionsOf(graph.getGraph())
+                .subscribe((v) -> JavaFxObservable.changesOf(v.getValue()).subscribe(
+                        (x) -> edgesTable.getItems().setAll(graph.getAllEdges())
+                ));
     }
 }

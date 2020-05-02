@@ -33,16 +33,24 @@ public class InfoController implements Initializable {
         gtype.setText(graph.getType().toString());
         gnodes.setText(String.valueOf(graph.numberOfNodes()));
         gedges.setText(String.valueOf(graph.numberOfEdges()));
+
         for (ObservableSet<Vertex> neighbor : graph.getGraph().values())
             JavaFxObservable.changesOf(neighbor).subscribe(
                     (v) -> {
                         gedges.setText(String.valueOf(graph.numberOfEdges()));
                     }
             );
+
         JavaFxObservable.changesOf(graph.getGraph()).subscribe(
                 (v) -> {
                     gnodes.setText(String.valueOf(graph.numberOfNodes()));
                 }
+        );
+
+        JavaFxObservable.additionsOf(graph.getGraph()).subscribe(
+                (v) -> JavaFxObservable.changesOf(v.getValue()).subscribe(
+                        (x) -> gedges.setText(String.valueOf(graph.numberOfEdges()))
+                )
         );
     }
 }
