@@ -3,4 +3,4 @@
 
 ### Showcase
 
-![showcase](https://github.com/Xelvoz/GraphXI/blob/master/showcase/demo.gif)
+![showcase](showcase/demo.gif)
